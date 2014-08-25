@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15 Aug, 2014, 12:56:19 AM
+    Author     : san
+*/
+.glyphicon glyphicon-phone-alt
+{
+   
+animation-name: stylie-transform2-keyframes;
+animation-duration: 100ms;
+animation-delay: 0ms;
+animation-fill-mode: forwards;
+animation-timing-function: linear;
+animation-iteration-count: infinite;
+transform-origin: 0 0;}
+
+/* KEYFRAMES */
+
+@keyframes stylie-transform-keyframes
+{
+0%
+{
+transform:translateX(30px) translateY(46px) rotate(0deg) translate(-50%, -50%);
+animation-timing-function: cubic-bezier(.25,.25,.75,.75);}
+100%
+{
+transform:translateX(260px) translateY(-150px) rotate(0deg) translate(-50%, -50%);}}
+
+@keyframes stylie-transform2-keyframes
+{
+0%
+{
+transform:translateX(40px) translateY(40px) rotate(0deg) translate(-50%, -50%);
+animation-timing-function: cubic-bezier(.25,.25,.75,.75);}
+100%
+{
+transform:translateX(50px) translateY(40px) rotate(0deg) translate(-50%, -50%);}}

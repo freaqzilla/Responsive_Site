@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="css/style2.css"/>
+        <link rel="stylesheet" href="css/bootstrap.css"/>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/jssor.core.js"></script>
+        <script type="text/javascript" src="js/jssor.utils.js"></script>
+        <script type="text/javascript" src="js/jssor.slider.js"></script>
+
+        <script>
+            jQuery(document).ready(function($) {
+                //Reference http://www.jssor.com/development/slider-with-slideshow-jquery.html
+                //Reference http://www.jssor.com/development/tool-slideshow-transition-viewer.html
+
+                var _SlideshowTransitions = [
+                    //Swing Outside in Stairs
+                    {$Duration: 1200, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $FlyDirection: 9, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 260, $Easing: {$Left: $JssorEasing$.$EaseInWave, $Top: $JssorEasing$.$EaseInWave, $Clip: $JssorEasing$.$EaseOutQuad}, $ScaleHorizontal: 0.2, $ScaleVertical: 0.1, $Outside: true, $Round: {$Left: 1.3, $Top: 2.5}}
+
+                    //Dodge Dance Outside out Stairs
+                    , {$Duration: 1500, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: {$Left: [0.1, 0.9], $Top: [0.1, 0.9]}, $SlideOut: true, $FlyDirection: 9, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 260, $Easing: {$Left: $JssorEasing$.$EaseInJump, $Top: $JssorEasing$.$EaseInJump, $Clip: $JssorEasing$.$EaseOutQuad}, $ScaleHorizontal: 0.3, $ScaleVertical: 0.3, $Outside: true, $Round: {$Left: 0.8, $Top: 2.5}}
+
+                    //Dodge Pet Outside in Stairs
+                    , {$Duration: 1500, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $FlyDirection: 9, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 260, $Easing: {$Left: $JssorEasing$.$EaseInWave, $Top: $JssorEasing$.$EaseInWave, $Clip: $JssorEasing$.$EaseOutQuad}, $ScaleHorizontal: 0.2, $ScaleVertical: 0.1, $Outside: true, $Round: {$Left: 0.8, $Top: 2.5}}
+
+                    //Dodge Dance Outside in Random
+                    , {$Duration: 1500, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $FlyDirection: 9, $Easing: {$Left: $JssorEasing$.$EaseInJump, $Top: $JssorEasing$.$EaseInJump, $Clip: $JssorEasing$.$EaseOutQuad}, $ScaleHorizontal: 0.3, $ScaleVertical: 0.3, $Outside: true, $Round: {$Left: 0.8, $Top: 2.5}}
+
+                    //Flutter out Wind
+                    , {$Duration: 1800, $Delay: 30, $Cols: 10, $Rows: 5, $Clip: 15, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $SlideOut: true, $FlyDirection: 5, $Reverse: true, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 2050, $Easing: {$Left: $JssorEasing$.$EaseInOutSine, $Top: $JssorEasing$.$EaseOutWave, $Clip: $JssorEasing$.$EaseInOutQuad}, $ScaleHorizontal: 1, $ScaleVertical: 0.2, $Outside: true, $Round: {$Top: 1.3}}
+
+                    //Collapse Stairs
+                    , {$Duration: 1200, $Delay: 30, $Cols: 8, $Rows: 4, $Clip: 15, $SlideOut: true, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 2049, $Easing: $JssorEasing$.$EaseOutQuad}
+
+                    //Collapse Random
+                    , {$Duration: 1000, $Delay: 80, $Cols: 8, $Rows: 4, $Clip: 15, $SlideOut: true, $Easing: $JssorEasing$.$EaseOutQuad}
+
+                    //Vertical Chess Stripe
+                    , {$Duration: 1000, $Cols: 12, $FlyDirection: 8, $Formation: $JssorSlideshowFormations$.$FormationStraight, $ChessMode: {$Column: 12}}
+
+                    //Extrude out Stripe
+                    , {$Duration: 1000, $Delay: 40, $Cols: 12, $SlideOut: true, $FlyDirection: 2, $Formation: $JssorSlideshowFormations$.$FormationStraight, $Assembly: 260, $Easing: {$Left: $JssorEasing$.$EaseInOutExpo, $Opacity: $JssorEasing$.$EaseInOutQuad}, $ScaleHorizontal: 0.2, $Opacity: 2, $Outside: true, $Round: {$Top: 0.5}}
+
+                    //Dominoes Stripe
+                    , {$Duration: 2000, $Delay: 60, $Cols: 15, $SlideOut: true, $FlyDirection: 8, $Formation: $JssorSlideshowFormations$.$FormationStraight, $Easing: $JssorEasing$.$EaseOutJump, $Round: {$Top: 1.5}}
+                ];
+
+
+                var _CaptionTransitions = [
+                    //Swing Outside in Stairs
+                    {$Duration: 1200, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $FlyDirection: 9, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 260, $Easing: {$Left: $JssorEasing$.$EaseInWave, $Top: $JssorEasing$.$EaseInWave, $Clip: $JssorEasing$.$EaseOutQuad}, $ScaleHorizontal: 0.2, $ScaleVertical: 0.1, $Outside: true, $Round: {$Left: 1.3, $Top: 2.5}}
+
+                    //Dodge Dance Outside out Stairs
+                    , {$Duration: 1500, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: {$Left: [0.1, 0.9], $Top: [0.1, 0.9]}, $SlideOut: true, $FlyDirection: 9, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 260, $Easing: {$Left: $JssorEasing$.$EaseInJump, $Top: $JssorEasing$.$EaseInJump, $Clip: $JssorEasing$.$EaseOutQuad}, $ScaleHorizontal: 0.3, $ScaleVertical: 0.3, $Outside: true, $Round: {$Left: 0.8, $Top: 2.5}}
+
+                    //Dodge Pet Outside in Stairs
+                    , {$Duration: 1500, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $FlyDirection: 9, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 260, $Easing: {$Left: $JssorEasing$.$EaseInWave, $Top: $JssorEasing$.$EaseInWave, $Clip: $JssorEasing$.$EaseOutQuad}, $ScaleHorizontal: 0.2, $ScaleVertical: 0.1, $Outside: true, $Round: {$Left: 0.8, $Top: 2.5}}
+
+                    //Dodge Dance Outside in Random
+                    , {$Duration: 1500, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $FlyDirection: 9, $Easing: {$Left: $JssorEasing$.$EaseInJump, $Top: $JssorEasing$.$EaseInJump, $Clip: $JssorEasing$.$EaseOutQuad}, $ScaleHorizontal: 0.3, $ScaleVertical: 0.3, $Outside: true, $Round: {$Left: 0.8, $Top: 2.5}}
+
+                    //Flutter out Wind
+                    , {$Duration: 1800, $Delay: 30, $Cols: 10, $Rows: 5, $Clip: 15, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $SlideOut: true, $FlyDirection: 5, $Reverse: true, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 2050, $Easing: {$Left: $JssorEasing$.$EaseInOutSine, $Top: $JssorEasing$.$EaseOutWave, $Clip: $JssorEasing$.$EaseInOutQuad}, $ScaleHorizontal: 1, $ScaleVertical: 0.2, $Outside: true, $Round: {$Top: 1.3}}
+
+                    //Collapse Stairs
+                    , {$Duration: 1200, $Delay: 30, $Cols: 8, $Rows: 4, $Clip: 15, $SlideOut: true, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 2049, $Easing: $JssorEasing$.$EaseOutQuad}
+
+                    //Collapse Random
+                    , {$Duration: 1000, $Delay: 80, $Cols: 8, $Rows: 4, $Clip: 15, $SlideOut: true, $Easing: $JssorEasing$.$EaseOutQuad}
+
+                    //Vertical Chess Stripe
+                    , {$Duration: 1000, $Cols: 12, $FlyDirection: 8, $Formation: $JssorSlideshowFormations$.$FormationStraight, $ChessMode: {$Column: 12}}
+
+                    //Extrude out Stripe
+                    , {$Duration: 1000, $Delay: 40, $Cols: 12, $SlideOut: true, $FlyDirection: 2, $Formation: $JssorSlideshowFormations$.$FormationStraight, $Assembly: 260, $Easing: {$Left: $JssorEasing$.$EaseInOutExpo, $Opacity: $JssorEasing$.$EaseInOutQuad}, $ScaleHorizontal: 0.2, $Opacity: 2, $Outside: true, $Round: {$Top: 0.5}}
+
+                    //Dominoes Stripe
+                    , {$Duration: 2000, $Delay: 60, $Cols: 15, $SlideOut: true, $FlyDirection: 8, $Formation: $JssorSlideshowFormations$.$FormationStraight, $Easing: $JssorEasing$.$EaseOutJump, $Round: {$Top: 1.5}}
+                ];
+
+
+
+                var options = {
+                    $AutoPlay: true, //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                    $AutoPlaySteps: 1, //[Optional] Steps to go for each navigation request (this options applys only when slideshow disabled), the default value is 1
+                    $AutoPlayInterval: 4000, //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+                    $PauseOnHover: 1, //[Optional] Whether to pause when mouse over if a slider is auto playing, 0 no pause, 1 pause for desktop, 2 pause for touch device, 3 pause for desktop and touch device, default value is 1
+
+                    $ArrowKeyNavigation: true, //[Optional] Allows keyboard (arrow key) navigation or not, default value is false
+                    $SlideDuration: 500, //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+                    $MinDragOffsetToSlide: 20, //[Optional] Minimum drag offset to trigger slide , default value is 20
+                    //$SlideWidth: 600,                                 //[Optional] Width of every slide in pixels, default value is width of 'slides' container
+                    //$SlideHeight: 300,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
+                    $SlideSpacing: 0, //[Optional] Space between each slide in pixels, default value is 0
+                    $DisplayPieces: 1, //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
+                    $ParkingPosition: 0, //[Optional] The offset position to park slide (this options applys only when slideshow disabled), default value is 0.
+                    $UISearchMode: 1, //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
+                    $PlayOrientation: 1, //[Optional] Orientation to play slide (for auto play, navigation), 1 horizental, 2 vertical, 5 horizental reverse, 6 vertical reverse, default value is 1
+                    $DragOrientation: 3, //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+
+                    $SlideshowOptions: {//[Optional] Options to specify and enable slideshow or not
+                        $Class: $JssorSlideshowRunner$, //[Required] Class to create instance of slideshow
+                        $Transitions: _SlideshowTransitions, //[Required] An array of slideshow transitions to play slideshow
+                        $TransitionsOrder: 1, //[Optional] The way to choose transition to play slide, 1 Sequence, 0 Random
+                        $ShowLink: true                                    //[Optional] Whether to bring slide link on top of the slider when slideshow is running, default value is false
+                    },
+                    $CaptionSliderOptions: {
+                        $Class: $JssorCaptionSlider$,
+                        $CaptionTransitions: _CaptionTransitions,
+                        $PlayInMode: 1,
+                        $PlayOutMode: 3
+                    },
+                    $BulletNavigatorOptions: {//[Optional] Options to specify and enable navigator or not
+                        $Class: $JssorBulletNavigator$, //[Required] Class to create navigator instance
+                        $ChanceToShow: 2, //[Required] 0 Never, 1 Mouse Over, 2 Always
+                        $AutoCenter: 0, //[Optional] Auto center navigator in parent container, 0 None, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                        $Steps: 1, //[Optional] Steps to go for each navigation request, default value is 1
+                        $Lanes: 1, //[Optional] Specify lanes to arrange items, default value is 1
+                        $SpacingX: 10, //[Optional] Horizontal space between each item in pixel, default value is 0
+                        $SpacingY: 10, //[Optional] Vertical space between each item in pixel, default value is 0
+                        $Orientation: 1                                 //[Optional] The orientation of the navigator, 1 horizontal, 2 vertical, default value is 1
+                    },
+                    $ArrowNavigatorOptions: {
+                        $Class: $JssorArrowNavigator$, //[Requried] Class to create arrow navigator instance
+                        $ChanceToShow: 2                                //[Required] 0 Never, 1 Mouse Over, 2 Always
+                    }
+                };
+
+                var jssor_slider2 = new $JssorSlider$("slider2_container", options);
+
+                //responsive code begin
+                //you can remove responsive code if you don't want the slider scales while window resizes
+                function ScaleSlider() {
+                    var parentWidth = jssor_slider2.$Elmt.parentNode.clientWidth;
+                    if (parentWidth)
+                        jssor_slider2.$SetScaleWidth(Math.min(parentWidth, 1300));
+                    else
+                        window.setTimeout(ScaleSlider, 30);
+                }
+
+                ScaleSlider();
+
+                if (!navigator.userAgent.match(/(iPhone|iPod|iPad|BlackBerry|IEMobile)/)) {
+                    $(window).bind('resize', ScaleSlider);
+                }
+
+
+                //if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
+                //    $(window).bind("orientationchange", ScaleSlider);
+                //}
+                //responsive code end
+                
+          
+$('#btn-phone').click(function() {
+  $( ".col-lg-2" ).effect( "shake" );
+});        
+            });
+        </script>
+
+        <style>
+/* Flaired edges, by Tomas Theunissen */
+		
+hr{
+    height: 30px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+    margin-right: 1%;
+    margin-left: 1%;
+}
+hr:before { /* Not really supposed to work, but does */
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;    
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+    margin-right:0;
+    margin-left: 0;
+}
+            .navbar{
+
+                background: none;
+                /*margin-top: 3%;*/
+                border: none;
+                margin: 0;
+
+            }
+
+            #mission-well{
+                
+                background: #fff;
+                height:auto;
+                /*margin-left: 9%;*/
+                 /*border: 1px solid #000;*/
+                 margin-top: 8%;
+                 margin-left: 5%;
+                  padding-top: 0;
+                  padding-bottom: 0.3%;
+              -webkit-box-shadow:
+            0px 0px 0px 2px rgba(0,0,0,0.6),
+                0px 0px 0px 14px #fff,
+                0px 0px 0px 18px rgba(0,0,0,0.2),
+                6px 6px 8px 17px #555;
+   
+     -moz-box-shadow:
+            0px 0px 0px 2px rgba(0,0,0,0.6),
+                0px 0px 0px 14px #fff,
+                0px 0px 0px 18px rgba(0,0,0,0.2),
+                6px 6px 8px 17px #555;
+   
+          box-shadow:
+            0px 0px 0px 2px rgba(0,0,0,0.6),
+                0px 0px 0px 14px #fff,
+                0px 0px 0px 18px rgba(0,0,0,0.2),
+                6px 6px 8px 17px #555;
+          border-radius: 0;
+            }
+            
+            
+            .nav{
+
+                margin-left: 10%;
+              
+                margin-top:4.5%;
+                
+                        }
+                        
+                         .navbar-header{
+
+                margin-left:0;
+                width: 277px;
+                height:auto;
+                padding-left: 0;
+                left:0;
+              
+                
+            }
+            
+            #contact-btn-top-phone{
+                
+                float:left;
+                margin-top: 4%;
+                margin-left:10%;
+                display: none;
+                border: none;
+                
+                
+            }
+            
+            #contact-btn-top-email{
+                
+                font-size:16px;
+                float:right;
+                margin-top: 4%;
+                margin-left:1%;
+                display: none;
+                  border: none;
+                
+            }
+            
+            #contact-btn-top-email span{
+                
+                font-size:1.4em;
+                
+            }
+
+            @media screen and (max-width:1200px){ .nav{ margin-left: 10px; margin-top: 25px; } .col-lg-3{ left: 45px; top:-50px; width: 90%; } #slider-div{ top:-45px; position: relative; } /* #footer-container{ top:-50px; position: relative; }*/ } @media screen and (max-width:1092px){ .nav{ width:80%; margin-top:-1%; margin-left:21%; /*position: relative;*/ } .navbar col-lg-2{ width:100%; } .navbar-header{ margin-left:10%; } #contact-info-div{ display: none; } .col-lg-3{ left: 220px; top:-80px; position: relative; width:70%; } /* #footer-container{ top:-80px; position: relative; }*/ #contact-btn-top-email{ display: block; } #contact-btn-top-phone{ display:block; margin-left: 7%; } #slider-div{ margin-top: 6%; } } @media screen and (max-width:947px){ #contact-btn-top-phone{ margin-left:3%; } #slider-div{ margin-top:60px; } .nav{ margin-left:15%; } } @media screen and (max-width:890px){ #contact-btn-top-phone{ margin-left:1%; } .navbar-header{ margin-left:3%; } #contact-btn-top-email{ margin-left:0; } .nav{ margin-left:10%; } } @media screen and (max-width:800px) { .nav{ margin-left:3%; width:90%; } .container-full{ top:-65px; position: relative; } .navbar-header{ margin-left:0; } #contact-btn-top-phone{ margin-left:0; } #welcome-content-well{ padding-top: 0; } } @media screen and (max-width:767px) { #slider-div{ margin-top: 35px; } .navbar-header{ height: 150px; margin-left: 35%; } /*.nav li a:hover { -webkit-transform: scale(1,1); }*/ .navbar-default .navbar-nav > .active{ border: none; } .navbar-default .navbar-nav > li:hover > a { color: #fff; background-color: #7c513e; border: none; } #mission-well{ margin-left: 0; } #contact-info-div{ display:none; } #contact-btn-top-email{ display: none; } #contact-btn-top-phone{ display: none; } /* .nav li { border:none; width:100%; }*/ .nav li a{ border-top:2px solid #000; text-align: center; } /* .navbar-default .navbar-collapse{ margin-left: 0; padding: 0; width:100%; }*/ } @media screen and (max-width:550px) { .navbar-header{ margin-left:25%; } .col-lg-3{ left: 120px; top:-80px; position: relative; width:10%; } #mission-well{ margin-top: 10%; } } @media screen and (max-width:407px) { .navbar-header{ margin-left:10%; } .col-lg-3{ left: 60px; top:-80px; position: relative; width:10%; } #mission-well{ margin-top: 15%; } .navbar-default .navbar-collapse{ margin-left: 0; } } @media screen and (max-width:347px) { .nav li{ width:80%; } .navbar-collapse{ overflow-x: hidden; } .col-lg-3{ left: 30px; top:-80px; position: relative; width:10%; } #mission-well{ margin-top: 20%; } } /* @media screen and (max-width:800px) { .navbar-header{ margin-left:-150px; position: relative; left: 5%; } }*/
+                 
+
+            .container-full {
+                margin: 0;
+                width: 100%;
+                /*background: url(images/blue.jpg);*/
+            }
+
+            .thumbnail{
+
+                padding: 0;
+ -moz-animation: 3s ease 0s normal none infinite swing;
+    -moz-transform-origin: center top;
+    -webkit-animation:swing 3s infinite ease-in-out;
+    -webkit-transform-origin:top;
+
+            }
+            
+            @-moz-keyframes swing{
+    0%{-moz-transform:rotate(-2deg)}
+    50%{-moz-transform:rotate(2deg)}
+    100%{-moz-transform:rotate(-2deg)}
+}
+@-webkit-keyframes swing{
+    0%{-webkit-transform:rotate(-2deg)}
+    50%{-webkit-transform:rotate(2deg)}
+    100%{-webkit-transform:rotate(-2deg)}
+}
+
+
+.thumbnail:hover{
+    
+    animation: none;
+    -webkit-animation:none;
+}
+    
+    
+    
+            .thumbnail h5 {
+
+                background: #568973;
+                font-family: 'Lato', sans-serif;
+                font-size: 14px;
+                line-height: 17px;
+                font-weight: 400;
+                color: #fff;
+                text-transform: uppercase;
+                padding-top: 20px;
+                padding-bottom: 17px;
+                margin-bottom: 28px;
+                letter-spacing: 1px;
+                margin-top: 0;
+                text-align: center;
+            }
+
+            .well{
+                
+                border: none;
+                background: none;
+                
+            }
+                
+               .well h2 { 
+                   
+                   color: #DFBF84; 
+                   font-family:cursive;
+                   font-size: 20px; 
+                   font-weight: normal; 
+                   line-height: 50px; 
+                   /*margin: 10px 0 20px;*/ 
+                   text-transform: uppercase; 
+                   text-shadow: 2px 2px 0 #000; 
+                   /*margin: 10px 0 24px;*/ 
+                   text-align: center; }
+
+/*.well h2 { 
+    font-size: 30px; 
+    letter-spacing: -1px; 
+    color: #DFBF84; 
+    text-transform: uppercase; 
+    text-shadow: 1px 1px 0 #000; 
+    margin: 10px 0 24px; 
+    text-align: center; 
+    line-height: 50px; }*/
+
+.well p { 
+    color: #000; 
+    font-family:sans-serif; 
+    font-size: 14px;
+    line-height: 24px;
+    /*margin: 0 0 24px;*/ 
+    text-align: left; }
+
+.well ul li { 
+    color: #000; 
+    font-family:sans-serif; 
+    font-size: 14px;
+    line-height: 24px;
+    /*margin: 0 0 24px;*/ 
+    text-align: left; }
+
+/*
+.well a { 
+    color: #e8d4a7; 
+    text-decoration: none; 
+    text-align: right; 
+    padding: 15px; 
+    font-size: 20px; }
+
+.well a:hover { 
+    color: #da9650; 
+    text-decoration: blink; }*/
+                
+
+/*            .well h2{
+                text-align: center;
+            }*/
+
+            .page-header{
+                border: none;
+            }
+
+           
+
+            #logo-image{
+
+                width: 100%;
+                height: 100%;
+
+            }
+
+
+            .navbar-form{
+
+                /*padding-top:4%;*/
+                /*margin-left:50px;*/
+                margin-top: 5%;
+            }
+            
+             .navbar-toggle{
+                
+                position: relative;
+                left:-110px;
+                top:-70px;
+                
+                
+            }
+            
+            .col-lg-6{
+                
+                margin-top: 2%;
+                margin-left:5%;
+            }
+
+            .nav li a{
+   
+    -webkit-transform: scale(1,1);
+    -webkit-transition-timing-function: ease-out;
+    -webkit-transition-duration: 250ms;
+    -moz-transform: scale(1,1);
+    -moz-transition-timing-function: ease-out;
+    -moz-transition-duration: 250ms;
+
+}
+            
+           
+.nav li a:hover {
+     /*opacity: .7;*/
+    -webkit-transform: scale(1.2,1.2);
+    -webkit-transition-timing-function: ease-out;
+    -webkit-transition-duration: 250ms;
+    -moz-transform: scale(1.05,1.07);
+    -moz-transition-timing-function: ease-out;
+    -moz-transition-duration: 250ms;
+    position: relative;
+    z-index: 99;
+}
+ 
+.navbar-default .navbar-nav > li > a{
+    
+    color:#000;
+    
+}           
+
+.navbar col-lg-2{
+    padding-left: 3%;
+}
+
+        </style>
+
+        <!-- Style for the Jssor Slider -->
+
+        <style> 
+            .captionOrange, .captionBlack
+            {
+                color: #fff;
+                font-size: 20px;
+                line-height: 30px;
+                text-align: center;
+                border-radius: 4px;
+            }
+            .captionOrange
+            {
+                background: #EB5100;
+                background-color: rgba(235, 81, 0, 0.6);
+            }
+            .captionBlack
+            {
+                font-size:16px;
+                background: #000;
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+            a.captionOrange, A.captionOrange:active, A.captionOrange:visited
+            {
+                color: #ffffff;
+                text-decoration: none;
+            }
+            a.captionOrange:hover
+            {
+                color: #eb5100;
+                text-decoration: underline;
+                background-color: #eeeeee;
+                background-color: rgba(238, 238, 238, 0.7);
+            }
+            .bricon
+            {
+                background: url(img/browser-icons.png);
+            }
+
+            .jssorb01 div, .jssorb01 div:hover, .jssorb01 .av
+            {
+                filter: alpha(opacity=70);
+                opacity: .7;
+                overflow:hidden;
+                cursor: pointer;
+                border: #000 1px solid;
+            }
+            .jssorb01 div { background-color: gray; }
+            .jssorb01 div:hover, .jssorb01 .av:hover { background-color: #d3d3d3; }
+            .jssorb01 .av { background-color: #fff; }
+            .jssorb01 .dn, .jssorb01 .dn:hover { background-color: #555555; }
+
+
+            .jssora05l, .jssora05r, .jssora05ldn, .jssora05rdn
+            {
+                position: absolute;
+                cursor: pointer;
+                display: block;
+                background: url(img/a17.png) no-repeat;
+                overflow:hidden;
+            }
+            .jssora05l { background-position: -10px -40px; }
+            .jssora05r { background-position: -70px -40px; }
+            .jssora05l:hover { background-position: -130px -40px; }
+            .jssora05r:hover { background-position: -190px -40px; }
+            .jssora05ldn { background-position: -250px -40px; }
+            .jssora05rdn { background-position: -310px -40px; }
+
+            .slider-caption{
+                position: absolute; 
+                top: 30px; 
+                left: 30px; 
+                width: auto;
+                height: auto;
+                background: #000;
+                padding: 1.5%;
+                border-top-left-radius: 20px;
+                border-bottom-right-radius: 20px;
+                font-size: 1.5em;
+                color: #fff;
+                opacity: 0.5;
+
+            }
+            
+            .collapse{
+                
+                margin-left: 40px;
+                margin-top: 20px;
+                
+                
+            }
+            
+            .col-lg-3{
+                
+                margin-top: 27px;
+                padding-left: 0;
+               
+            }
+
+            .col-lg-3 button{
+                
+                border:none;
+                
+            }
+            
+            
+            
+            #mission-well p{
+                
+              text-align: justify;
+            }
+            
+            #welcome-content-well{
+                margin-top: 8%;
+                  -webkit-box-shadow:
+            0px 0px 0px 2px rgba(0,0,0,0.6),
+                0px 0px 0px 14px #fff,
+                0px 0px 0px 18px rgba(0,0,0,0.2),
+                6px 6px 8px 17px #555;
+   
+     -moz-box-shadow:
+            0px 0px 0px 2px rgba(0,0,0,0.6),
+                0px 0px 0px 14px #fff,
+                0px 0px 0px 18px rgba(0,0,0,0.2),
+                6px 6px 8px 17px #555;
+   
+          box-shadow:
+            0px 0px 0px 2px rgba(0,0,0,0.6),
+                0px 0px 0px 14px #fff,
+                0px 0px 0px 18px rgba(0,0,0,0.2),
+                6px 6px 8px 17px #555;
+                 /*border: 1px solid #000;*/
+                height:auto;
+                border-radius:0;
+                padding-top: 0;
+                /*overflow-y: scroll;*/
+                padding-bottom:2%;
+/*                background: url(images/paint1.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;*/
+          
+                padding-left: 5px;
+            }
+            
+            #welcome-content-well h2{
+                text-align: left;
+/*background: url(images/green_paint.jpg) no-repeat center center fixed;*/
+                margin-left:2%; 
+            }
+            
+/*            #welcome-content-well img{
+               width: 100%;
+               height:auto;
+            }*/
+            
+/*            #welcome-content-well .content{
+               position: absolute;
+    top: 0;
+    bottom: 0;
+    height: auto;
+    overflow: auto;
+            }*/
+            
+            #welcome-list{
+                
+                list-style-type: none;
+                padding: 0;
+            }
+            
+            #welcome-list .glyphicon{
+                top:5px;
+                font-size: 1.7em;
+                
+            }
+            
+            #welcome-list span{
+                
+             text-align: justify;
+             margin-left: 2%;
+             font-size: 1em;
+            }
+            
+            #thumbnail-div{
+                
+               background: url(images/brick.png);
+               padding-top:7%;
+               padding-bottom: 2%;
+              /*height:30%;*/
+              margin-top: 3%;
+              border-top:8px solid #c6c0b2;
+                
+            }
+           
+            #footer-div{
+                
+                /*background: url(images/green_cup.png);*/
+                background-color: #c6c0b2;
+                margin-top:0;
+                padding:15px
+            }
+            
+            #footer-container{
+                
+                border-top:8px solid #c6c0b2;
+                margin-top: -9.1%;
+            }
+            
+            #footer-div p{
+                
+               /*background: #568973;*/
+                font-family: 'Lato',sans-serif;
+                font-size: 2em;
+                /*line-height: 17px;*/
+                font-weight: 300;
+                font-style: italic;
+                color:#7c513e;
+                /*text-transform: uppercase;*/
+                margin-left: 5%;
+                padding-bottom: 10%;
+                letter-spacing: 1px;
+                margin-top: 0;
+                /*text-align: justify;*/
+                display: table;
+                
+            }
+            
+            .container-fluid{
+                
+                padding-left: 0;
+            }
+            
+            
+            
+        </style>
+
+        <!-- Style for the Jssor Slider Ends Here -->
+
+
+    </head>
+    <body>
+        <div class="container-fluid">
+<div class="row">
+            <!--<div class="container-fluid">-->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                
+                    <div class="col-lg-2">
+                        <button id="contact-btn-top-phone" type="button" class="btn btn-default btn-lg">
+                          <span class="glyphicon glyphicon-phone-alt"></span> <p><b>&nbsp;&nbsp;&nbsp;&nbsp;1300 721 934&nbsp;&nbsp;&nbsp;</b></p>
+</button>
+                    
+                <div class="navbar-header">
+                    <!--<div id="logo-div">-->
+                    <a href="banner.html"><img id="logo-image" src="images/logo.png"  alt="logo image loading" /></a>
+                    <!--</div>-->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+                        <button id="contact-btn-top-email" type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-envelope"></span><p>&nbsp;&nbsp;&nbsp;&nbsp;info@opalconstructions.com.au</p>
+</button>
+                        
+                        </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="col-lg-7">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                
+                    
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">HOME</a></li>
+                        <li><a href="index.html">ABOUT US</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">SERVICES <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">GALLERY</a></li>
+                        <li><a href="#">CONTACT US</a></li>
+                    
+                        <!--        <li class="dropdown">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                                  <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">One more separated link</a></li>
+                                  </ul>
+                                </li>-->
+                    </ul>
+                   
+<!--                    <form class="navbar-form navbar-right" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+
+                    </form>-->
+
+                  
+                </div><!-- /.navbar-collapse -->
+                <!--</div> /.container-fluid -->
+                </div>
+                
+                <div id="contact-info-div" class="col-lg-3">
+                      <button id="btn-phone" type="button" class="btn btn-default btn-lg">
+                          <span class="glyphicon glyphicon-phone-alt"></span> <b>&nbsp;&nbsp;&nbsp;&nbsp;1300 721 934&nbsp;&nbsp;&nbsp;</b>
+</button>
+                    <button style="font-size:16px;" id="btn-email" type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;&nbsp;info@opalconstructions.com.au
+</button>
+<!--                    <p class="lead">Contact Us- <b>1300 721 934</b></p>
+                     <p> Email- <a href="#" style="font-size:16px">info@opalconstructions.com.au</a></p>-->
+                                   
+                </div>
+                
+            </nav>
+</div>
+            </div>
+            <!-- Jssor Slider Begin -->
+            <!-- You can move inline styles to css file or css block. -->
+            <div id="slider-div" class="container-fluid">
+                <div id="slider2_container" style="position: relative; width: 1300px;height: 400px;">
+
+                    <!-- Loading Screen -->
+                    <!--        <div u="loading" style="position: absolute; top: 0px; left: 0px;">
+                                <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
+                                    background-color: #000; top: 0px; left: 0px;width: 100%;height:100%;">
+                                </div>
+                                <div style="position: absolute; display: block; background: url(img/loading.gif) no-repeat center center;
+                                    top: 0px; left: 0px;width: 100%;height:100%;">
+                                </div>
+                            </div>-->
+
+                    <!-- Slides Container -->
+                    <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 1300px; height: 400px; overflow: hidden;">
+                        <div>
+                            <a u=image href="#"><img src="images/1.png" /></a>
+<!--                            <div class="slider-caption" u="caption" t="*" >
+                                Your dream home with everything included. Home & Land packages from as little as $354,000.
+                            </div>-->
+                        </div>
+                        <div>
+                            <a u=image href="#"><img src="images/2.png" /></a>
+                            
+                        </div>
+                        <div>
+                            <a u=image href="#"><img src="images/3.png" /></a>
+                            
+                        </div>
+                        <div>
+                            <a u=image href="#"><img src="images/4.png" /></a>
+                          
+                        </div>
+                        <div>
+                            <a u=image href="#"><img src="images/5.png" /></a>
+                            
+                        </div>
+<!--                        <div>
+                            <a u=image href="#"><img src="images/6.png" /></a>
+                           
+                        </div>-->
+                        <div>
+                            <a u=image href="#"><img src="images/7.png" /></a>
+                            
+                        </div>
+<!--                        <div>
+                            <a u=image href="#"><img src="images/8.png" /></a>
+                           
+                        </div>-->
+                        <div>
+                            <a u=image href="#"><img src="images/9.png" /></a>
+                           
+                        </div>
+                        <div>
+                            <a u=image href="#"><img src="images/10.png" /></a>
+                           
+                        </div>
+                        <div>
+                            <a u=image href="#"><img src="images/11.png" /></a>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Bullet Navigator Skin Begin -->
+                    <!-- jssor slider bullet navigator skin 01 -->   
+                    <!-- bullet navigator container -->
+                    <div u="navigator" class="jssorb01" style="position: absolute; bottom: 16px; right: 10px;">
+                        <!-- bullet navigator item prototype -->
+                        <div u="prototype" style="POSITION: absolute; WIDTH: 12px; HEIGHT: 12px;"></div>
+                    </div>
+                    <!-- Bullet Navigator Skin End -->
+
+                    <!-- Arrow Navigator Skin Begin -->
+                    <!-- Arrow Left -->
+                    <span u="arrowleft" class="jssora05l" style="width: 40px; height: 40px; top: 180px; left: 8px;">
+                    </span>
+                    <!-- Arrow Right -->
+                    <span u="arrowright" class="jssora05r" style="width: 40px; height: 40px; top: 180px; right: 8px">
+                    </span>
+                    <!-- Arrow Navigator Skin End -->
+                    <a style="display: none" href="http://www.jssor.com">slideshow</a>
+                </div>
+</div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div  class="well well-sm visible-xs">
+
+                            <a style="text-align:center" href="/" class="btn btn-lg btn-block btn-default"><span class="glyphicon glyphicon-phone"></span> Give Us a Call</a>
+
+                        </div>
+                            </div>
+                        <div class="col-sm-6">
+                        <div  class="well well-sm visible-xs">
+
+                            <a style="text-align:center" href="/" class="btn btn-lg btn-block btn-default"><span class="glyphicon glyphicon-phone"></span>Send Us an Email</a>
+
+                        </div>
+                            </div>
+                        </div>
+                    <div style="padding-right:5px;padding-left:5px" class="row">
+    
+    <div class="col-sm-6">
+        <div id="welcome-content-well" class="well well-lg">
+            <!--<img src="images/paint1.jpg" alt="roller-image"/>-->
+            <!--<div class="content">-->
+            <div style="margin-top:0;padding: 0;margin-bottom: 0" class="page-header">
+                                <h2>Welcome to Our Company
+                                    <!--<small>Subtext for header</small>-->
+                                </h2>
+                            </div>
+            
+                            <!--<p style="margin-top:0">-->
+                                <ul id="welcome-list">
+                           <li><span class="glyphicon glyphicon-ok-circle"></span><span>Outstanding product at a competitive price</span></li>
+                           <li><span class="glyphicon glyphicon-ok-circle"></span><span>Commitment to ecologically friendly construction</span></li>
+                           <li><span class="glyphicon glyphicon-ok-circle"></span><span>Comfortable working relationship with your contractor</span></li>
+                          <li> <span class="glyphicon glyphicon-ok-circle"></span><span>High standards of skill and integrity in our team members</span></li>
+                          <li> <span class="glyphicon glyphicon-ok-circle"></span><span>Trustworthy company with excellent customer satisfaction</span></li>
+                          <li> <span class="glyphicon glyphicon-ok-circle"></span><span>Quality Product built on Values</span></li>
+                          <li> <span class="glyphicon glyphicon-ok-circle"></span><span>Build and renovate everything from interior to exterior</span></li>
+                          <!--<li> <span class="glyphicon glyphicon-ok-circle"></span><span style="margin-left:20px;font-size:1.3em;text-align: center">Dedication to safety of our staff</span></li>-->
+                </ul>
+                            <!--</p>-->
+            </div>
+       <!--</div>-->
+    </div>
+    
+    <div class="col-sm-6">
+        <div id="mission-well" class="well well-lg">
+            <div style="margin-top:0;padding: 0" class="page-header">
+                                <h2>Our Mission
+                                    <!--<small>Subtext for header</small>-->
+                                </h2>
+            <p>
+                Opal constructions mission is to help more Australians into a new home. The key to realising this mission lies with our ability to provide a better experience for our clients at all stages of the home building process.We will provide exceptionally good value for money, innovative homes constructed to a consistently high quality with an outstanding level of customer service. In our dealings with all stakeholders we will uphold the principles of honesty, integrity, accountability and trustworthiness, the key cornerstones on which opal constructions reputation and success has been built to this day.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+                 <!--<hr class="divider">-->   
+<!--                    <div class="row">
+                        <div class="well well-sm visible-xs">
+
+                            <a href="/" class="btn btn-lg btn-block btn-default"><span class="glyphicon glyphicon-phone"></span> Give Us a Call</a>
+
+                        </div>
+                        <div class="well">
+
+                            <div class="page-header">
+                                <h2>Welcome to Our Company
+                                    <small>Subtext for header</small>
+                                </h2>
+                            </div>
+                            <p>
+                                We believe in creating an outstanding product at a competitive price. We believe in nurturing high standards of skill and integrity in our team members. We maintain all aspects of your home from interior to exterior.  If you are looking to get comfortable and enjoy a good working relationship with your contractor look no further. We believe in a dedication to the safety of our staff. We believe in a commitment to ecologically friendly construction. Most of all, we believe our values as a company are every bit as important to us…and to you…as the quality of our product.  
+                                We build and renovate. We maintain all aspects of your home from interior to exterior.  If you’re looking to get comfortable and enjoy a good working relationship with your contractor look no further.  Let’s face it when you’re ready to sink some money into a bathroom or kitchen remodel you want to deal with a trustworthy company that maintains excellent customer satisfaction!   
+                            </p>
+                            <a href="/" class="btn btn-primary">Learn More...</a>
+                        </div>
+                    </div>-->
+                </div>
+                <div id="thumbnail-div" class="container-fluid">
+                    <div class="row" style="padding-left:10px;padding-right: 10px">
+                        <div class="col-sm-6 col-md-3">
+             
+<div class="thumbnail">
+    <img style="margin-top:4px;margin-bottom: 4px" width="20" height="20" src="images/nailhead2.jpg" alt="nailhead">
+                                
+                                <h5>construction aggregates</h5>
+                                <img data-src="holder.js/300x300" alt="...">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consequat felis eu nisl lacinia ornare. </p>
+                                    <!--<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="thumbnail">
+                                <img style="margin-top:4px;margin-bottom: 4px" width="20" height="20" src="images/nailhead1.jpg" alt="nailhead">
+                                <h5>construction aggregates</h5>
+                                <img data-src="holder.js/300x300" alt="...">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consequat felis eu nisl lacinia ornare. </p>
+                                    <!--<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="thumbnail">
+                                <img style="margin-top:4px;margin-bottom: 4px" width="20" height="20" src="images/nailhead2.jpg" alt="nailhead">
+                                <h5>construction aggregates</h5>
+                                <img data-src="holder.js/300x300" alt="...">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consequat felis eu nisl lacinia ornare. </p>
+                                    <!--<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="thumbnail">
+                                <img style="margin-top:4px;margin-bottom: 4px" width="20" height="20" src="images/nailhead1.jpg" alt="nailhead">
+                                <h5>construction aggregates</h5>
+                                <img data-src="holder.js/300x300" alt="...">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consequat felis eu nisl lacinia ornare.</p>
+                                    <!--<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+               <div id="footer-container" class="container-fluid">
+<div id="footer-div" class="row" >
+
+    <div style="margin-top:10%" class="col-lg-12">
+        <img width="50" height="30" src="images/orange-quotes.png" alt="quotes-image">
+        <p>
+            
+   In the end, you're measured not by how much you undertake but by what you finally accomplish.
+</p>
+<p style="font-size: 1.5em;margin-top:-10%;margin-left: 3%">
+- Donald Trump
+
+        </p>
+    </div>
+    
+    
+            </div><!--end footer-div-->
+            </div><!--end container-fluid page footer-->
+<!--</div>end container-full-->
+
+     <!--   </div>end container-fluid page wrapper-->
+    </body>
+    
+
+</html>
